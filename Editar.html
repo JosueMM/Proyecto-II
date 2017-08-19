@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+<link rel="stylesheet" type="text/css" href="css/LogReg.css">
+
+</head>
+
+<body>
+  <div class="body"></div>
+		<div class="grad"></div>
+		<div class="header">
+			<div>Varadi<span>TICO</span></div>
+		</div>
+		<br>
+		<div class="login">
+
+				<input type="text" placeholder="User" name="user"><br><br>
+				<input type="text" placeholder="Name" name="name"><br><br>
+				<input type="text" placeholder="Last Name" name="lastName"><br><br>
+				<input type="text" placeholder="Email" name="email"><br><br>
+				<input type="password" placeholder="Password" name="password"><br>
+				<input type="password" placeholder="Confirm password" name="password2"><br><br>
+				<input type="text" placeholder="Phone" name="phone"><br><br>
+				<input type="text" placeholder="Location" name="location"><br><br>
+				<input type="button" id="proveedor" value="Proveedor" name="btn_proveedor" onclick="mostrar()">
+				<br>
+				<input type="button" value="Confirmar" onClick="window.location.href='Principal.html'" >
+            
+		</div>
+
+			<div id="prov" style="display:none;">
+			    <input type="text" placeholder="Nombre de servicio" name="Servicio"><br><br>
+				<input type="text" placeholder="Descripcion" name="descripcion"><br><br>
+                <input type="button" value="Cancelar" onclick="ocultar()"></br>
+                
+		</div>
+    
+    
+   <script type="text/javascript">
+function mostrar(){
+document.getElementById('prov').style.display = 'block';}
+</script>
+
+<script type="text/javascript">
+function ocultar(){
+document.getElementById('prov').style.display = 'none';}
+</script>
+    
+</body>
+</html>

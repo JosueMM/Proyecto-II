@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Merriweather:300,700,300italic,700italic|Source+Sans+Pro:900");
+
+*{
+	padding: 0;
+	margin: 0;
+}
+body{
+	 font-family: "Josefin Slab"; sans-serif;
+	background-image: url("difuminado.jpg");
+
+}
+.eco{
+position: absolute;
+top:50%;
+left:50%;
+border: solid 2px;
+margin-left:-200px;
+margin-top:-150px;
+padding:5px;
+text-align: center;
+background-color: #fff;
+width: 400px;
+
+} 
+
+.ec-stars-wrapper {
+	font-size: 0;
+	display: inline-block;
+}
+.ec-stars-wrapper a {
+	text-decoration: none;
+	display: inline-block;
+	font-size: 32px;
+	font-size: 2rem;
+	
+	color: #888;
+}
+
+.ec-stars-wrapper:hover a {
+	color: rgb(39, 130, 228);
+}
+.ec-stars-wrapper > a:hover ~ a {
+	color: #888;
+}

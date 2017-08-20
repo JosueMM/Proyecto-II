@@ -2,10 +2,14 @@ var usuariosRegistrados=[];
 var log;
 var post = [];
 var numero ;
+var vendor;
 
 function addEvents(){
 	
 	getProveedores();
+  seleccion();
+  servCntra();
+  
 }
 
 addEvents();
@@ -96,6 +100,87 @@ function validar(){
     }
 }
 
+function seleccion() {
+    var table = document.getElementById("users_table");
+     var rows = table.getElementsByTagName("tr");
+    for (var i = 0; i < rows.length; i++) {
+        rows[i].onclick = (function() { 
+            return function() {
+              vendor = this.cells[0].innerHTML;
+              BuscarVendor();
+            }    
+        })(i);
+    }
+}
+function BuscarVendor(){
+
+location.href="Acuerdo.html";
+var usuarios = [];
+      if (localStorage.getItem('Varaditico_usuarios')) {
+          usuarios = JSON.parse(localStorage.getItem('Varaditico_usuarios'));  
+      }
+
+      usuarios.forEach(function(usuario, index, usuarios) {
+        if(usuario.usuario == vendor){
+            personaVendor(usuario);
+        }
+      });
+}
+
+function cancelarVendor(){
+  localStorage.removeItem("personaVendor");
+  location.href="Principal.html"
+}
+
+function servicioContratados(serv) {
+    localStorage.setItem('servContratados', JSON.stringify(serv))
+}
+
+function personaVendor(persona) {
+    localStorage.setItem('personaVendor', JSON.stringify(persona))
+}
+
+function contratarServ(){
+
+var storageUsuarios = localStorage.getItem('personaVendor');
+  if(storageUsuarios == null){
+    vendedor = [];
+  }else{
+    vendedor = JSON.parse(storageUsuarios);
+  }
+
+  var usuarioVendedor = vendedor.usuario;
+  var descripcionVendedor = vendedor.descripcion;
+  var servicioVendedor = vendedor.servicio;
+  var f = new Date();
+var fecha  = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+var tojson = 
+         
+            {
+                "vendedor": usuarioVendedor,
+                "descripcion": descripcionVendedor,
+                "servicio": servicioVendedor,
+                "fecha":fecha
+
+            };
+
+    var info = JSON.parse(localStorage.getItem("servContratados"));
+
+    if (info === null) {
+        var arrayJson=[];
+        arrayJson.push(tojson);
+        localStorage.setItem("servContratados", JSON.stringify(arrayJson));
+        window.location.href = "Perfil.html";
+    } else {
+        info.push(tojson);
+        localStorage.setItem("servContratados", JSON.stringify(info));
+        window.location.href = "Perfil.html";
+    }
+
+
+}
+
+
 function guardarUsuario() {
 
     var phone =  document.getElementById("telefono").value; 
@@ -153,8 +238,7 @@ document.getElementById('servicio').value = "";
  function getProveedores() {
       var usuarios = [];
       if (localStorage.getItem('Varaditico_usuarios')) {
-          usuarios = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
-         
+          usuarios = JSON.parse(localStorage.getItem('Varaditico_usuarios'));  
       }
     var table = document.getElementById("users_table");
     table.innerHTML = null;
@@ -163,13 +247,12 @@ document.getElementById('servicio').value = "";
       	if(usuario.servicio != ""){
 			tabla(usuario)
       	}
-        
       });
     }
 
 function tabla(usuarios) {
         var table = document.getElementById("users_table");
-        var row = "</td><td>"+usuarios.servicio+"</td><td>"+usuarios.nombre+"</td><td>"+usuarios.telefono+"</td></tr>";
+        var row = "</td><td>"+usuarios.usuario+"</td><td>"+usuarios.servicio+"</td><td>"+usuarios.nombre+"</td><td>"+usuarios.telefono+"</td></tr>";
         table.innerHTML = table.innerHTML + row;
     }
 
@@ -195,6 +278,34 @@ if(document.getElementById('contrasenna').value==document.getElementById('ccontr
     }
   }   
 }
+
+ function servCntra() {
+      var usuarios = [];
+      if (localStorage.getItem('servContratados')) {
+          usuarios = JSON.parse(localStorage.getItem('servContratados'));  
+      }
+    var table = document.getElementById("servContratados_table");
+    table.innerHTML = null;
+    
+      usuarios.forEach(function(usuario, index, usuarios) {
+        if(usuario.servicio != ""){
+      tabla(usuario)
+        }
+      });
+    }
+
+function tabla(usuarios) {
+
+        var table = document.getElementById("servContratados_table");
+        if(table != null){
+              var row = "</td><td>"+usuarios.servicio+"</td><td>"+usuarios.descripcion+"</td><td>"+usuarios.fecha+"</td></tr>";
+        table.innerHTML = table.innerHTML + row;
+        }else{
+          var row = "</td><td>"+usuarios.servicio+"</td><td>"+usuarios.descripcion+"</td><td>"+usuarios.fecha+"</td></tr>";
+          table.innerHTML = row;
+        }
+        
+    }
     
     
 

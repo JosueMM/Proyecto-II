@@ -20,6 +20,7 @@ function editar(){
                 document.getElementById('descripcion').value=usuariosRegistrados.descripcion;
                 document.getElementById('servicio').value=usuariosRegistrados.servicio;
                 document.getElementById('correo').value = usuariosRegistrados.correo;
+                
 }
 
 function updateUser(){

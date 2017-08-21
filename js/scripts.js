@@ -124,10 +124,13 @@ var usuarios = [];
       });
 }
 
+
 function cancelarVendor(){
   localStorage.removeItem("personaVendor");
   location.href="Principal.html"
 }
+
+
 
 function servicioContratados(serv) {
     localStorage.setItem('servContratados', JSON.stringify(serv))
@@ -281,10 +284,10 @@ function tabla(usuarios) {
  
 
 function valorar(numero){
-   var idUserActive = localStorage.getItem('personaVendor');
+    var idUserActive = JSON.parse(localStorage.getItem('valorar'));
      users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
      for (var i = 0; i < users.length; i++) {
-         if(idUserActive.vendedor==users[i].usuario){
+         if(idUserActive.usuario==users[i].usuario){
                  users[i].usuario = users[i].usuario;
                  users[i].apellido = users[i].apellido;
                  users[i].nombre = users[i].nombre;
@@ -295,8 +298,10 @@ function valorar(numero){
                  users[i].descripcion = users[i].descripcion;
                  users[i].servicio = users[i].servicio;
                  users[i].estrellas = users[i].estrellas+numero;
+                 personaLogueada(users[i]);
          }
-         localStorage.setItem('Varaditico_usuarios', JSON.stringify(users));  
+         localStorage.setItem('Varaditico_usuarios', JSON.stringify(users)); 
+         
     }
          location.href ="Perfil.html";
   

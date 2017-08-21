@@ -30,11 +30,13 @@ function cargarPerfil() {
         if(usuariosRegistrados.servicio == ""){
           document.getElementById('lblProveedor').innerHTML = "No";
            document.getElementById('lblServicio').innerHTML = "No Posee Servicios";
-          document.getElementById('lblDescripcion').innerHTML = "No posee Servicios";
+           document.getElementById('lblDescripcion').innerHTML = "No posee Servicios";
+           document.getElementById('estrellas').innerHTML = usuariosRegistrados.estrellas;
         }else{
            document.getElementById('lblProveedor').innerHTML = "Si";
             document.getElementById('lblServicio').innerHTML = usuariosRegistrados.servicio;
            document.getElementById('lblDescripcion').innerHTML = usuariosRegistrados.descripcion;
+           document.getElementById('estrellas').innerHTML = usuariosRegistrados.estrellas;
           } 
       
     
@@ -168,13 +170,34 @@ function seleccionPend() {
            var  fecha = this.cells[4].innerHTML;
               
               if (confirm("Este servicio ya fue completado?") == true) {
+                 
                 updateServ(id);
+                BuscarPersonaValorada(us);
                 }
                 
 } 
     })(i);
     }
 }
+
+function personaValorada(pen) {
+    localStorage.setItem('valorar', JSON.stringify(pen))
+}
+
+function BuscarPersonaValorada(pvalor){
+
+var usuarios = [];
+      if (localStorage.getItem('Varaditico_usuarios')) {
+          usuarios = JSON.parse(localStorage.getItem('Varaditico_usuarios'));  
+      }
+
+      usuarios.forEach(function(usuario, index, usuarios) {
+        if(usuario.usuario == pvalor){
+            personaValorada(usuario);
+        }
+      });
+}
+
 
 function deleteServ(id,serv,des,fec){
      var servicios  = JSON.parse(localStorage.getItem('servContratados'));  
@@ -185,14 +208,22 @@ function deleteServ(id,serv,des,fec){
        if((id==servicios[i].vendedor)&&(des ==servicios[i].descripcion) 
          &&(serv == servicios[i].servicio)&&(fec==servicios[i].fecha)&& (servicios[i].terminado == "Y")){
 
-              alert("Eliminado exitoso.")
+               alert("Eliminado exitoso.")
+
+         }else if((id==servicios[i].vendedor)&&(des ==servicios[i].descripcion) 
+         &&(serv == servicios[i].servicio)&&(fec==servicios[i].fecha)&& (servicios[i].terminado == "F")){
             
+          listaS.push(servicios[i]);
+          alert("No s puede eliminar este servicio porque no ha sido calificado")
+          return;
+          location.reload();
          }else{
           listaS.push(servicios[i]);
          }
         }
+
         localStorage.setItem('servContratados', JSON.stringify(listaS));
-         servCntra(); 
+        location.reload();
           
 }
 

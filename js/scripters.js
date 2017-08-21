@@ -14,15 +14,17 @@ addEvents();
 
 function cargarPerfil() {
 
-  var storageUsuarios = localStorage.getItem('personaLogueada');
+  var storageUsuarios = sessionStorage.getItem('personaLogueada');
   if(storageUsuarios == null){
     usuariosRegistrados = [];
   }else{
     usuariosRegistrados = JSON.parse(storageUsuarios);
   }
-  
-    
-        document.getElementById('lblUsuario').innerHTML = usuariosRegistrados.usuario;
+
+  users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
+  for (var i = 0; i < users.length; i++) {
+if(usuariosRegistrados.usuario == users[i].usuario){
+document.getElementById('lblUsuario').innerHTML = usuariosRegistrados.usuario;
         document.getElementById('lblNombre').innerHTML = usuariosRegistrados.nombre;
         document.getElementById('lblCorreo').innerHTML = usuariosRegistrados.correo;
         document.getElementById('lblTelefono').innerHTML = usuariosRegistrados.telefono;
@@ -37,9 +39,16 @@ function cargarPerfil() {
             document.getElementById('lblServicio').innerHTML = usuariosRegistrados.servicio;
            document.getElementById('lblDescripcion').innerHTML = usuariosRegistrados.descripcion;
            document.getElementById('estrellas').innerHTML = usuariosRegistrados.estrellas;
-          } 
+          }
+
+         sessionStorage.setItem('personaLogueada', JSON.stringify(users[i])); 
       
     
+}
+  }
+  
+    
+        
    
       
   }
@@ -47,8 +56,8 @@ function cargarPerfil() {
       
       function servCntra() {
       var usuarios = [];
-      if (localStorage.getItem('servContratados')) {
-          usuarios = JSON.parse(localStorage.getItem('servContratados'));  
+      if (sessionStorage.getItem('servContratados')) {
+          usuarios = JSON.parse(sessionStorage.getItem('servContratados'));  
       }
     var table = document.getElementById("servContratados_table");
     if(table!=null){table.innerHTML = null;}
@@ -77,8 +86,8 @@ function tabla(usuarios) {
 
     function servPendi() {
       var usuarios = [];
-      if (localStorage.getItem('servContratados')) {
-          usuarios = JSON.parse(localStorage.getItem('servContratados'));  
+      if (sessionStorage.getItem('servContratados')) {
+          usuarios = JSON.parse(sessionStorage.getItem('servContratados'));  
       }
     var table = document.getElementById("servPendientes_table");
     if(table!=null){table.innerHTML = null;}
@@ -122,8 +131,8 @@ function tablaP(usuarios) {
 function BuscarServ(){
 
 var usuarios = [];
-      if (localStorage.getItem('servContratados')) {
-          usuarios = JSON.parse(localStorage.getItem('servContratados'));  
+      if (sessionStorage.getItem('servContratados')) {
+          usuarios = JSON.parse(sessionStorage.getItem('servContratados'));  
       }
 
       usuarios.forEach(function(usuario, index, usuarios) {
@@ -200,7 +209,7 @@ var usuarios = [];
 
 
 function deleteServ(id,serv,des,fec){
-     var servicios  = JSON.parse(localStorage.getItem('servContratados'));  
+     var servicios  = JSON.parse(sessionStorage.getItem('servContratados'));  
     
       var listaS=[];
       
@@ -222,14 +231,14 @@ function deleteServ(id,serv,des,fec){
          }
         }
 
-        localStorage.setItem('servContratados', JSON.stringify(listaS));
+        sessionStorage.setItem('servContratados', JSON.stringify(listaS));
         location.reload();
           
 }
 
 function updateServ(ind){
 
-     users = JSON.parse(localStorage.getItem('servContratados'));
+     users = JSON.parse(sessionStorage.getItem('servContratados'));
      for (var i = 0; i < users.length; i++) {
          if(ind==users[i].id){
                  users[i].vendedor = users[i].vendedor;
@@ -238,7 +247,7 @@ function updateServ(ind){
                  users[i].descripcion = users[i].descripcion;
                  users[i].servicio = users[i].servicio;
          }
-         localStorage.setItem('servContratados', JSON.stringify(users));
+         sessionStorage.setItem('servContratados', JSON.stringify(users));
          location.href="Valorar.html";
 
     }    

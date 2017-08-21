@@ -36,7 +36,7 @@ function login() {
 }
 
 function personaLogueada(persona) {
-    localStorage.setItem('personaLogueada', JSON.stringify(persona))
+    sessionStorage.setItem('personaLogueada', JSON.stringify(persona))
 }
 
 function validarCampos(){
@@ -133,7 +133,7 @@ function cancelarVendor(){
 
 
 function servicioContratados(serv) {
-    localStorage.setItem('servContratados', JSON.stringify(serv))
+    sessionStorage.setItem('servContratados', JSON.stringify(serv))
 }
 
 function personaVendor(persona) {
@@ -155,7 +155,7 @@ var storageUsuarios = localStorage.getItem('personaVendor');
   var terminado = "F";
   var f = new Date();
 var fecha  = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
-var id = localStorage.getItem('servContratados');
+var id = sessionStorage.getItem('servContratados');
 var indet;
 
 if(id != null){
@@ -184,16 +184,16 @@ var tojson =
                 "fecha":fecha
             };
 
-    var info = JSON.parse(localStorage.getItem("servContratados"));
+    var info = JSON.parse(sessionStorage.getItem("servContratados"));
 
     if (info === null) {
         var arrayJson=[];
         arrayJson.push(tojson);
-        localStorage.setItem("servContratados", JSON.stringify(arrayJson));
+        sessionStorage.setItem("servContratados", JSON.stringify(arrayJson));
         window.location.href = "Perfil.html";
     } else {
         info.push(tojson);
-        localStorage.setItem("servContratados", JSON.stringify(info));
+        sessionStorage.setItem("servContratados", JSON.stringify(info));
         window.location.href = "Perfil.html";
     }
 
@@ -298,7 +298,7 @@ function valorar(numero){
                  users[i].descripcion = users[i].descripcion;
                  users[i].servicio = users[i].servicio;
                  users[i].estrellas = users[i].estrellas+numero;
-                 personaLogueada(users[i]);
+                 
          }
          localStorage.setItem('Varaditico_usuarios', JSON.stringify(users)); 
          

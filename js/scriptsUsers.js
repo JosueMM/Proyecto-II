@@ -6,7 +6,7 @@ editar();
 
 function editar(){
 
-  var storageUsuarios = localStorage.getItem('personaLogueada');
+  var storageUsuarios = sessionStorage.getItem('personaLogueada');
   if(storageUsuarios == null){
     usuariosRegistrados = [];
   }else{
@@ -24,14 +24,14 @@ function editar(){
 }
 
 function updateUser(){
-var storageUsuarios = localStorage.getItem('personaLogueada');
+var storageUsuarios = sessionStorage.getItem('personaLogueada');
   if(storageUsuarios == null){
     usuariosRegistrados = [];
   }else{
     usuariosRegistrados = JSON.parse(storageUsuarios);
   }
   
-     users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
+     users = JSON.parse(sessionStorage.getItem('Varaditico_usuarios'));
                 
 if(document.getElementById('contrasena').value==document.getElementById('contrasena2').value){
      for (var i = 0; i < users.length; i++) {
@@ -97,5 +97,5 @@ else if(document.getElementById("contrasena").value == document.getElementById("
 }
 
 function personaLogueada(persona) {
-  localStorage.setItem('personaLogueada', JSON.stringify(persona))
+  sessionStorage.setItem('personaLogueada', JSON.stringify(persona))
 }

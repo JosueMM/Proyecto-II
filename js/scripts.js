@@ -5,11 +5,8 @@ var numero ;
 var vendor;
 
 function addEvents(){
-	
 	getProveedores();
-  seleccion();
-  servCntra();
-  
+
 }
 
 addEvents();
@@ -152,16 +149,36 @@ var storageUsuarios = localStorage.getItem('personaVendor');
   var usuarioVendedor = vendedor.usuario;
   var descripcionVendedor = vendedor.descripcion;
   var servicioVendedor = vendedor.servicio;
+  var terminado = "F";
   var f = new Date();
 var fecha  = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+var id = localStorage.getItem('servContratados');
+var indet;
+
+if(id != null){
+for (var i = 0; i < id.length; i++) {
+  if(id[i].id == null){
+indet = i;
+  }else{
+    indet = i +1;
+  }
+}
+}else{
+  indet = 0;
+}
+
+
+
+
 var tojson = 
-         
+
             {
+                "id": indet,
+                "terminado":terminado,
                 "vendedor": usuarioVendedor,
                 "descripcion": descripcionVendedor,
                 "servicio": servicioVendedor,
                 "fecha":fecha
-
             };
 
     var info = JSON.parse(localStorage.getItem("servContratados"));
@@ -177,7 +194,7 @@ var tojson =
         window.location.href = "Perfil.html";
     }
 
-
+  
 }
 
 
@@ -192,7 +209,7 @@ function guardarUsuario() {
     var lastName = document.getElementById("apellido").value;
     var service = document.getElementById("servicio").value;
     var descripcion = document.getElementById("descripcion").value;
-
+    var estrellas = 0; 
 
     var tojson = 
          
@@ -205,7 +222,8 @@ function guardarUsuario() {
                 "direccion":location,
                 "apellido":lastName,
                 "servicio": service,
-                "descripcion":descripcion
+                "descripcion":descripcion,
+                "estrellas":estrellas
             
 
             };
@@ -240,14 +258,17 @@ document.getElementById('servicio').value = "";
       if (localStorage.getItem('Varaditico_usuarios')) {
           usuarios = JSON.parse(localStorage.getItem('Varaditico_usuarios'));  
       }
-    var table = document.getElementById("users_table");
-    table.innerHTML = null;
-    
+      var table = document.getElementById("users_table");
+      if(table != null){
+         table.innerHTML = null;
+      }
+
       usuarios.forEach(function(usuario, index, usuarios) {
       	if(usuario.servicio != ""){
 			tabla(usuario)
       	}
       });
+      seleccion();
     }
 
 function tabla(usuarios) {
@@ -257,55 +278,33 @@ function tabla(usuarios) {
     }
 
 
- function updateUser(){
-     var idUserActive = localStorage.getItem('personaLogueada');
-     users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
-if(document.getElementById('contrasenna').value==document.getElementById('ccontrasenna').value){
-     for (var i = 0; i < users.length; i++) {
-         if(idUserActive==users[i].idUsuario){
-                 users[i].usuario = document.getElementById('usuario').value;
-                 users[i].contrasena =document.getElementById('contrasenna').value;
-                 users[i].telefono = document.getElementById('telefono').value;
-                 users[i].correo = document.getElementById('correo').value;
-                 users[i].direccion = document.getElementById('direccion').value;
-         }else{
-              alert("Error password");
-         }
-         localStorage.setItem('users', JSON.stringify(users));
-         alert("Actualizacion Completa");
-         location.href ="Perfil.html";
+ 
 
+function valorar(numero){
+   var idUserActive = localStorage.getItem('personaVendor');
+     users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
+     for (var i = 0; i < users.length; i++) {
+         if(idUserActive.vendedor==users[i].usuario){
+                 users[i].usuario = users[i].usuario;
+                 users[i].apellido = users[i].apellido;
+                 users[i].nombre = users[i].nombre;
+                 users[i].contrasena =users[i].contrasena;
+                 users[i].telefono = users[i].telefono;
+                 users[i].correo = users[i].correo;
+                 users[i].direccion = users[i].direccion;
+                 users[i].descripcion = users[i].descripcion;
+                 users[i].servicio = users[i].servicio;
+                 users[i].estrellas = users[i].estrellas+numero;
+         }
+         localStorage.setItem('Varaditico_usuarios', JSON.stringify(users));  
     }
-  }   
+         location.href ="Perfil.html";
+  
 }
 
- function servCntra() {
-      var usuarios = [];
-      if (localStorage.getItem('servContratados')) {
-          usuarios = JSON.parse(localStorage.getItem('servContratados'));  
-      }
-    var table = document.getElementById("servContratados_table");
-    table.innerHTML = null;
-    
-      usuarios.forEach(function(usuario, index, usuarios) {
-        if(usuario.servicio != ""){
-      tabla(usuario)
-        }
-      });
-    }
 
-function tabla(usuarios) {
 
-        var table = document.getElementById("servContratados_table");
-        if(table != null){
-              var row = "</td><td>"+usuarios.servicio+"</td><td>"+usuarios.descripcion+"</td><td>"+usuarios.fecha+"</td></tr>";
-        table.innerHTML = table.innerHTML + row;
-        }else{
-          var row = "</td><td>"+usuarios.servicio+"</td><td>"+usuarios.descripcion+"</td><td>"+usuarios.fecha+"</td></tr>";
-          table.innerHTML = row;
-        }
-        
-    }
+ 
     
     
 

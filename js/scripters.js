@@ -190,7 +190,7 @@ function seleccionPend() {
 }
 
 function personaValorada(pen) {
-    localStorage.setItem('valorar', JSON.stringify(pen))
+    sessionStorage.setItem('valorar', JSON.stringify(pen))
 }
 
 function BuscarPersonaValorada(pvalor){

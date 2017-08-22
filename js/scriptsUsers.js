@@ -31,7 +31,7 @@ var storageUsuarios = sessionStorage.getItem('personaLogueada');
     usuariosRegistrados = JSON.parse(storageUsuarios);
   }
   
-     users = JSON.parse(sessionStorage.getItem('Varaditico_usuarios'));
+     users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
                 
 if(document.getElementById('contrasena').value==document.getElementById('contrasena2').value){
      for (var i = 0; i < users.length; i++) {

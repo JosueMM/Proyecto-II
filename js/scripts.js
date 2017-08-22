@@ -284,7 +284,7 @@ function tabla(usuarios) {
  
 
 function valorar(numero){
-    var idUserActive = JSON.parse(localStorage.getItem('valorar'));
+    var idUserActive = JSON.parse(sessionStorage.getItem('valorar'));
      users = JSON.parse(localStorage.getItem('Varaditico_usuarios'));
      for (var i = 0; i < users.length; i++) {
          if(idUserActive.usuario==users[i].usuario){

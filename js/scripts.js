@@ -17,8 +17,12 @@ function login() {
     var passwordInterfaz = document.getElementById("psw").value;
     
     var usuarios = JSON.parse(localStorage.getItem("Varaditico_usuarios"));
+
     var intento = 1;
-    for (var i = 0; i < usuarios.length; i++) {
+    if(usuarios == null){
+      alert("Usuario no encontrado");
+    }else{
+      for (var i = 0; i < usuarios.length; i++) {
         var email = usuarios[i].usuario;
         var pass = usuarios[i].contrasena;
         if(emailInterfaz == email && passwordInterfaz == pass){
@@ -33,6 +37,8 @@ function login() {
     if(intento == 1){
             alert("Usuario o Contraseña Inválida."); 
     }
+    }
+    
 }
 
 function personaLogueada(persona) {
